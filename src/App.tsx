@@ -1,45 +1,54 @@
 import { useEffect, useState } from 'react';
 import './App.css'
-import { useAuth } from 'react-oidc-context';
 
+interface UserProfile {
+  provider: string;
+  _json: object;
+  id: string;
+  displayName: string;
+  photos: { value: string }[];
+  identifier: string;
+}
 
 function App() {
-  const auth = useAuth();
-  const [user, setUser] = useState(null);
 
-  console.log(auth?.user)
+  const [user, setUser] = useState<UserProfile | null>(null);
+
   const handleLogin = () => {
     window.location.href = 'http://localhost:5009/auth/steam';
   };
 
   const handleLogout = () => {
-    fetch('http://localhost:5009/logout', {
-      method: 'POST',
-      credentials: 'include'
-    }).then(() => window.location.reload());
+    fetch('http://localhost:5009/logout', { credentials: 'include' })
+      .then(() => {
+        setUser(null);
+        window.location.reload();
+      });
   };
 
   useEffect(() => {
     fetch('http://localhost:5009/api/user', {
-      credentials: 'include'
+      credentials: 'include' 
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.user) {
-          setUser(data.user);
+      .then(response => {
+        if (response.ok) {
+          return response.json();
         }
+        throw new Error('Failed to fetch user');
       })
-      .catch(() => {
-        setUser(null);
+      .then(data => {
+        setUser(data.user);
+      })
+      .catch(error => {
+        console.error('Error fetching user:', error);
       });
-      console.log(user)
   }, []);
 
   return (
       <div className="card">
-        {auth.isAuthenticated ? (
+        {user ? (
         <div>
-          <p>Authenticated as {user}</p>
+          <p>{user.displayName}</p>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
