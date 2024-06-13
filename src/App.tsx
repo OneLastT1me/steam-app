@@ -1,48 +1,17 @@
-import { useEffect, useState } from 'react';
 import './App.css'
-
-interface UserProfile {
-  provider: string;
-  _json: object;
-  id: string;
-  displayName: string;
-  photos: { value: string }[];
-  identifier: string;
-}
+import useUserLogin from './hooks/userLogin'
+import useLogout from './hooks/userLogout'
 
 function App() {
-
-  const [user, setUser] = useState<UserProfile | null>(null);
-
+  const { data: user} = useUserLogin();
+  const logoutMutation = useLogout();
+  
   const handleLogin = () => {
     window.location.href = 'http://localhost:5009/auth/steam';
   };
-
   const handleLogout = () => {
-    fetch('http://localhost:5009/logout', { credentials: 'include' })
-      .then(() => {
-        setUser(null);
-        window.location.reload();
-      });
+    logoutMutation.mutate();
   };
-
-  useEffect(() => {
-    fetch('http://localhost:5009/api/user', {
-      credentials: 'include' 
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Failed to fetch user');
-      })
-      .then(data => {
-        setUser(data.user);
-      })
-      .catch(error => {
-        console.error('Error fetching user:', error);
-      });
-  }, []);
 
   return (
       <div className="card">

@@ -5,7 +5,6 @@ import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import cors from 'cors';
 
-
 const app = express();
 
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
@@ -65,12 +64,12 @@ app.get('/api/user', (req, res) => {
   }
 });
 
-app.get('/logout', (req, res, next) => {
+app.post('/api/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    res.redirect('/');
+    res.status(200).send({ message: 'Logged out successfully' });
   });
 });
 
