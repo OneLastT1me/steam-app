@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react';
 import './App.css'
+import { useAuth } from 'react-oidc-context';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const auth = useAuth();
+  const [user, setUser] = useState(null);
+
+  console.log(auth?.user)
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:5009/auth/steam';
+  };
+
+  const handleLogout = () => {
+    fetch('http://localhost:5009/logout', {
+      method: 'POST',
+      credentials: 'include'
+    }).then(() => window.location.reload());
+  };
+
+  useEffect(() => {
+    fetch('http://localhost:5009/api/user', {
+      credentials: 'include'
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.user) {
+          setUser(data.user);
+        }
+      })
+      .catch(() => {
+        setUser(null);
+      });
+      console.log(user)
+  }, []);
 
   return (
-    <>
-      <div>
-        <></>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        {auth.isAuthenticated ? (
+        <div>
+          <p>Authenticated as {user}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <p>Not authenticated</p>
+          <button onClick={handleLogin}>Login with Steam</button>
+        </div>
+      )}
+
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
   )
 }
 
