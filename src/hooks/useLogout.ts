@@ -9,7 +9,7 @@ const userLogout = async () => {
   return response.data.user;
 };
 
-const useUserLogout = () => {
+const useLogout = () => {
   const queryClient = useQueryClient();
 
   return useMutation(userLogout, {
@@ -18,4 +18,4 @@ const useUserLogout = () => {
     }
   });
 };
-export default useUserLogout;
+export default useLogout;

@@ -53,11 +53,8 @@ app.get('/auth/steam/return', passport.authenticate('steam', { failureRedirect: 
 
 app.get('/api/user', (req, res) => {
   try {
-    console.log('API User:', req.user);
     if (req.isAuthenticated()) {
       res.json({ user: req.user });
-    } else {
-      res.status(401).json({ error: 'User not authenticated' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });

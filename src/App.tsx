@@ -1,9 +1,9 @@
 import './App.css'
-import useUserLogin from './hooks/userLogin'
-import useLogout from './hooks/userLogout'
+import useLogin from './hooks/useLogin';
+import useLogout from './hooks/useLogout'
 
 function App() {
-  const { data: user} = useUserLogin();
+  const { data: user} = useLogin();
   const logoutMutation = useLogout();
   
   const handleLogin = () => {
