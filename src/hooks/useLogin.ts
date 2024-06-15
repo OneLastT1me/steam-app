@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 
 
-const userLogin = async () => {
+const login = async () => {
   const response = await axios.get('http://localhost:5009/api/user', {
     withCredentials: true
   });
@@ -11,7 +11,7 @@ const userLogin = async () => {
 };
 
 const useLogin= () => {
-  return useQuery('user', userLogin, {
+  return useQuery('user', login, {
     refetchOnWindowFocus: false 
   });
 };

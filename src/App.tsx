@@ -4,13 +4,13 @@ import useLogout from './hooks/useLogout'
 
 function App() {
   const { data: user} = useLogin();
-  const logoutMutation = useLogout();
+  const { mutate } = useLogout();
   
   const handleLogin = () => {
     window.location.href = 'http://localhost:5009/auth/steam';
   };
   const handleLogout = () => {
-    logoutMutation.mutate();
+    mutate();
   };
 
   return (
@@ -28,7 +28,6 @@ function App() {
       )}
 
       </div>
-
   )
 }
 

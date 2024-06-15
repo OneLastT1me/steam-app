@@ -1,4 +1,3 @@
-
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -6,8 +5,6 @@ import { Strategy as SteamStrategy } from 'passport-steam';
 import cors from 'cors';
 
 const app = express();
-
-const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
 app.use(cors({
   origin: 'http://localhost:5173', 
@@ -26,7 +23,7 @@ app.use(session({
 passport.use(new SteamStrategy({
   returnURL: 'http://localhost:5009/auth/steam/return',
   realm: 'http://localhost:5009/',
-  apiKey: STEAM_API_KEY,
+  apiKey: process.env.STEAM_API_KEY,
   passReqToCallback: true,
 }, ( req, identifier, profile, done) => {
   profile.identifier = identifier;
