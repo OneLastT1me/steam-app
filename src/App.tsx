@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import useLogin from './hooks/useLogin';
+import useLogout from './hooks/useLogout'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data: user} = useLogin();
+  const { mutate } = useLogout();
+  
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:5009/auth/steam';
+  };
+  const handleLogout = () => {
+    mutate();
+  };
 
   return (
-    <>
-      <div>
-        <></>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        {user ? (
+        <div>
+          <p>{user.displayName}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <p>Not authenticated</p>
+          <button onClick={handleLogin}>Login with Steam</button>
+        </div>
+      )}
+
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
 
