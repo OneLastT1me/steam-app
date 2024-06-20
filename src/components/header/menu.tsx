@@ -1,43 +1,40 @@
 import { Link } from "react-router-dom"
 import  SteamLogo from './../../assets/SteamLogo.svg'
-import Authorizathion from "../Action/authorization"
+import Authorization from "../Action/authorization"
+import { useState } from "react"
+import { MOCK_MENU } from "./MOCK"
 
 const Menu = () =>{
+    const [activeStyle, setActiveStyle] = useState('STORE')
+
     return(
-        <header className="h-[105px] bg-header">
+        <header className="h-[105px] bg-darkblue">
             <div className="max-w-[940px] h-full mx-auto flex">
-                <img src={SteamLogo} className="w-[174px] h-[44px]  mt-[30px] mr-[40px]"/>
-                <ul className="flex space-x-4 pt-[45px]" >
-                    <li className="relative group">
-                        <div>
-                            <Link to="/" className="text-header">STORE</Link>
-                            <ul className=" absolute hidden mt-2 w-[124px] group-hover:block">
-                                <li className="">
-                                    <Link to="/" className="dropdown-menu">Home</Link>
+                <Link to="/" className="text-header mr-[40px]"><img src={SteamLogo} className="w-[176px] h-[74px] pt-[30px] mr-[40px]"/></Link>
+                <div className="w-full flex justify-between">
+                    <ul className=" flex pt-[45px]">
+                        {
+                            MOCK_MENU.map((item, index) => (
+                                <li className="group pl-[7px] pr-[7px] pb-[7px]" key={index} onClick={() => setActiveStyle(item.name)}>
+                                    <Link 
+                                        to={item.link} 
+                                        className={activeStyle === item.name? 'active-menu' : 'text-header'}
+                                    >{item.name}</Link>
+                                    {item.dropDown  &&(
+                                        <ul className="absolute hidden mt-[3px] ml-[-10px] w-[136px] group-hover:block">
+                                            {item.dropDown.map((item, index) =>(
+                                                <li key={index}>
+                                                    <Link to={item.link} className="dropdown-menu">{item.name}</Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </li>
-                                <li className="">
-                                    <Link to="/" className="dropdown-menu">Wishlist</Link>
-                                </li>
-                                <li className=" ">
-                                    <Link to="/" className="dropdown-menu">Points shop</Link>
-                                </li>
-                                <li className=" ">
-                                    <Link to="/" className="dropdown-menu">News</Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <Link to="/" className="text-header">COMMUNITY</Link>
-                    </li>
-                    <li>
-                        <Link to="/" className="text-header">ABOUT</Link>
-                    </li>
-                    <li>
-                        <Link to="/" className="text-header">SUPPORT</Link>
-                    </li>
-                </ul>
-            <Authorizathion />
+                            ))
+                        }
+                        </ul>
+                    <Authorization />
+                </div>
             </div>
     </header>
     )

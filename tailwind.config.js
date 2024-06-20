@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './index.html',
@@ -14,10 +13,11 @@ module.exports = {
         sm: ['12px', '16px'],
       },
       colors: {
-        header: '#1a202c', 
+        darkblue: '#171d25', 
         white: '#dcdedf',
         lightWhite: '#ffffff',
         gray: '#3D4450',
+        blue: '#1a9fff',
       },
     },
   },

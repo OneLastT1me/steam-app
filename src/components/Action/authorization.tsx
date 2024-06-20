@@ -1,7 +1,7 @@
 import useLogin from "../../hooks/useLogin";
 import useLogout from "../../hooks/useLogout";
 
-const Authorizathion = () =>{
+const Authorization = () =>{
 
     const { data: user} = useLogin();
   const { mutate } = useLogout();
@@ -14,7 +14,7 @@ const Authorizathion = () =>{
   };
 
     return (
-        <>
+        <div>
         { user ? (
             <div>
                 <p>{user.displayName}</p>
@@ -22,11 +22,11 @@ const Authorizathion = () =>{
             </div>
         ) : (
             <div>
-                <button onClick={handleLogin} className="text-white">login</button>
+                <button onClick={handleLogin} className="text-[#b8b6b4] leading-[14px] text-[12px]">login</button>
             </div>
         )}
-      </>
+      </div>
     )
 }
 
-export default Authorizathion
+export default Authorization
