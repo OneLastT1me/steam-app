@@ -2,10 +2,102 @@ import { Link } from "react-router-dom"
 import  SteamLogo from './../../assets/SteamLogo.svg'
 import Authorization from "../Action/authorization"
 import { useState } from "react"
-import { MOCK_MENU } from "./MOCK"
+import useLogin from "../../hooks/useLogin"
+
+type MenuItem = {
+    name: string;
+    link: string;
+    dropDown?: MenuItem[];
+};
 
 const Menu = () =>{
     const [activeStyle, setActiveStyle] = useState('STORE')
+    const { data: user} = useLogin();
+
+    const MOCK_MENU: MenuItem[] = [
+        {
+            name: 'STORE',
+            link: '/',
+            dropDown: [
+                {
+                    name: 'Home',
+                    link: '/'
+                },
+                {
+                    name:'Discovery Queue',
+                    link: '/'
+                } ,
+                {
+                    name: 'Wishlist',
+                    link: '/'
+                },
+                {
+                    name:'News',
+                    link: '/'
+                }
+            ]
+        },
+        {
+            name: 'COMUNNITY',
+            link: '/',
+            dropDown: [
+               { 
+                    name:'Home',
+                    link: '/'
+                },
+                {
+                    name: 'Discussions',
+                    link: '/'
+                } ,
+                {
+                    name:'Markeds',
+                    link: '/'
+                },
+            ]
+        },
+        user ?  {
+            name: user.displayName.toUpperCase(),
+            link: '/',
+            dropDown: [
+               { 
+                    name:'Activity',
+                    link: '/'
+                },
+                {
+                    name: 'Profile',
+                    link: '/'
+                } ,
+                {
+                    name:'Friends',
+                    link: '/'
+                },
+                {
+                    name:'Games',
+                    link: '/'
+                },
+                {
+                    name:'Groups',
+                    link: '/'
+                },
+                {
+                    name:'Content',
+                    link: '/'
+                },
+                {
+                    name:'Invetory',
+                    link: '/'
+                },
+            ]
+        } : { 
+            name: 'ABOUT',
+            link: '/'
+        } ,
+        { 
+            name: 'SUPPORT',
+            link: '/'
+        }
+        
+    ]
 
     return(
         <header className="h-[105px] bg-darkblue">

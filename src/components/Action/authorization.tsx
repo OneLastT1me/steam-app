@@ -3,7 +3,7 @@ import useLogout from "../../hooks/useLogout";
 
 const Authorization = () =>{
 
-    const { data: user} = useLogin();
+  const { data: user} = useLogin();
   const { mutate } = useLogout();
   
   const handleLogin = () => {
