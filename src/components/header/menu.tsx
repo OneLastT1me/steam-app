@@ -3,6 +3,7 @@ import  SteamLogo from './../../assets/SteamLogo.svg'
 import Authorization from "../Action/authorization"
 import { useState } from "react"
 import useLogin from "../../hooks/useLogin"
+import '../../index.css'
 
 type MenuItem = {
     name: string;
@@ -14,7 +15,7 @@ const Menu = () =>{
     const [activeStyle, setActiveStyle] = useState('STORE')
     const { data: user} = useLogin();
 
-    const MOCK_MENU: MenuItem[] = [
+    const MENU: MenuItem[] = [
         {
             name: 'STORE',
             link: '/',
@@ -24,41 +25,15 @@ const Menu = () =>{
                     link: '/'
                 },
                 {
-                    name:'Discovery Queue',
-                    link: '/'
-                } ,
-                {
                     name: 'Wishlist',
                     link: '/'
                 },
-                {
-                    name:'News',
-                    link: '/'
-                }
             ]
         },
         {
-            name: 'COMUNNITY',
-            link: '/',
-            dropDown: [
-               { 
-                    name:'Home',
-                    link: '/'
-                },
-                {
-                    name: 'Discussions',
-                    link: '/'
-                } ,
-                {
-                    name:'Markeds',
-                    link: '/'
-                },
-            ]
-        },
-        user ?  {
-            name: user.displayName.toUpperCase(),
-            link: '/',
-            dropDown: [
+            name: user ? user.displayName.toUpperCase() : 'COMMUNITY',
+            link: user ? '/' : 'http://localhost:5009/auth/steam',
+            dropDown: user  && [
                { 
                     name:'Activity',
                     link: '/'
@@ -75,43 +50,25 @@ const Menu = () =>{
                     name:'Games',
                     link: '/'
                 },
-                {
-                    name:'Groups',
-                    link: '/'
-                },
-                {
-                    name:'Content',
-                    link: '/'
-                },
-                {
-                    name:'Invetory',
-                    link: '/'
-                },
-            ]
-        } : { 
-            name: 'ABOUT',
-            link: '/'
-        } ,
-        { 
-            name: 'SUPPORT',
-            link: '/'
-        }
+            ],
+        },
+  
         
     ]
 
     return(
         <header className="h-[105px] bg-darkblue">
-            <div className="max-w-[940px] h-full mx-auto flex">
-                <Link to="/" className="text-header mr-[40px]"><img src={SteamLogo} className="w-[176px] h-[74px] pt-[30px] mr-[40px]"/></Link>
+            <div className="w-[953px] h-full mx-auto flex">
+                <Link to="/" className="text-header mr-[40px]"><img src={SteamLogo} className="w-[186px] h-[74px] pt-[30px] mr-[40px]"/></Link>
                 <div className="w-full flex justify-between">
-                    <ul className=" flex pt-[45px]">
+                    <ul className=" flex pt-[41px] ml-[-16px]">
                         {
-                            MOCK_MENU.map((item, index) => (
-                                <li className="group pl-[7px] pr-[7px] pb-[7px]" key={index} onClick={() => setActiveStyle(item.name)}>
+                            MENU.map((item, index) => (
+                                <li className="group px-[7px] pb-[7px]" key={index} onClick={() => setActiveStyle(item.name)}>
                                     <Link 
                                         to={item.link} 
                                         className={activeStyle === item.name? 'active-menu' : 'text-header'}
-                                    >{item.name}</Link>
+                                    >{item.name}</Link> 
                                     {item.dropDown  &&(
                                         <ul className="absolute hidden mt-[3px] ml-[-10px] w-[136px] group-hover:block">
                                             {item.dropDown.map((item, index) =>(

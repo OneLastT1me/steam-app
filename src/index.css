@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .text-header {
-	@apply text-base text-white font-semibold font-sans; 
+	@apply text-base text-white font-medium font-sans; 
 
 	&:hover{
 		@apply text-lightWhite
@@ -11,7 +11,7 @@
 }
 
 .dropdown-menu {
-	@apply block px-4 py-2 text-gray text-white font-semibold  bg-gray text-sm ;
+	@apply block px-4 py-2 text-gray text-white font-medium  bg-gray text-sm font-sans;
 
 	&:hover{
 		@apply bg-white text-gray
@@ -19,6 +19,6 @@
 }
 
 .active-menu {
-	@apply text-blue underline  decoration-2  font-semibold
+	@apply text-blue underline  decoration-2  font-medium font-sans
 }
 

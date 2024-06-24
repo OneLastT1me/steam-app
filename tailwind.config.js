@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Motiva Sans"', '"Twemoji"', '"Noto Sans"', 'Helvetica', 'sans-serif'],
+        sans: ['Motiva Sans', '"Twemoji"', '"Noto Sans"', 'Helvetica', 'sans-serif'],
       },
       fontSize: {
         base: ['16px', '16px'],
