@@ -31,7 +31,7 @@ const Menu = () =>{
             ]
         },
         {
-            name: user ? user.displayName.toUpperCase() : 'COMMUNITY',
+            name: user ? user.displayName.toUpperCase() : 'PROFILE',
             link: user ? '/' : 'http://localhost:5009/auth/steam',
             dropDown: user  && [
                { 
@@ -40,7 +40,7 @@ const Menu = () =>{
                 },
                 {
                     name: 'Profile',
-                    link: '/'
+                    link: '/profile'
                 } ,
                 {
                     name:'Friends',

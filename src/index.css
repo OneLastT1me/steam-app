@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+	--gradient-right: #ff7e5f; /* Пример начального цвета градиента */
+	--gradient-left: #feb47b;  /* Пример начального цвета градиента */
+  }
+/* header-menu */
 
 .text-header {
 	@apply text-base text-white font-medium font-sans; 
@@ -21,4 +26,15 @@
 .active-menu {
 	@apply text-blue underline  decoration-2  font-medium font-sans
 }
+
+
+/* profile */
+
+.bg-profile {
+	background-image: url('/src/assets/bg_dots.png');
+  	background-size: cover;
+  	background-position: center;
+}
+
+
 
