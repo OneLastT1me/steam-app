@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "i18n-iso-countries": "^7.11.2",
     "passport": "^0.7.0",
     "passport-steam": "^1.0.18",
     "react": "^18.2.0",

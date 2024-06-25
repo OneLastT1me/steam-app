@@ -8,15 +8,15 @@
 /* header-menu */
 
 .text-header {
-	@apply text-base text-white font-medium font-sans; 
+	@apply text-base text-white font-medium font-sans font-motiva; 
 
 	&:hover{
-		@apply text-lightWhite
+		@apply text-lightwhite
 	}
 }
 
 .dropdown-menu {
-	@apply block px-4 py-2 text-gray text-white font-medium  bg-gray text-sm font-sans;
+	@apply block px-4 py-2 text-gray text-white font-medium  bg-gray text-sm font-sans font-motiva;
 
 	&:hover{
 		@apply bg-white text-gray
@@ -24,7 +24,7 @@
 }
 
 .active-menu {
-	@apply text-blue underline  decoration-2  font-medium font-sans
+	@apply text-blue underline  decoration-2  font-medium font-sans font-motiva
 }
 
 

@@ -17,12 +17,12 @@ const Authorization = () =>{
         <div>
         { user ? (
             <div>
-                <p>{user.displayName}</p>
-                <button onClick={handleLogout}>Logout</button>
+                <p className="leading-[14px] text-[12px] text-lightgray">{user.displayName}</p>
+                <button onClick={handleLogout} className="leading-[14px] text-[12px] text-lightgray">Logout</button>
             </div>
         ) : (
             <div>
-                <button onClick={handleLogin} className="text-[#b8b6b4] leading-[14px] text-[12px]">login</button>
+                <button onClick={handleLogin} className="text-lightgray leading-[14px] text-[12px]">login</button>
             </div>
         )}
       </div>
