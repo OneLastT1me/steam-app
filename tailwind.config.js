@@ -12,7 +12,8 @@ module.exports = {
       fontSize: {
         base: ['16px', '16px'],
         sm: ['12px', '16px'],
-        xl: ['24px', '40px']
+        ls: ['16px', '30px'],
+        xl: ['24px', '40px'],
       },
       colors: {
         darkblue: '#171d25', 
@@ -20,15 +21,20 @@ module.exports = {
         lightwhite: '#ffffff',
         darkgray: '#23262E',
         hex: '#c4c4c4',
+        namegame: '#ebebeb',
         lightgray: '#b8b6b4',
         gray: '#3D4450',
         blue: '#1a9fff',
         oceanblue: '#39838d',
         offline: '#969696',
         online: '#57cbde',
-        ingame: '#90ba3c'
+        ingame: '#90ba3c',
+        rgbwhite: 'rgba(var(--gradient-white))',
+        rgbgray: 'rgba(var(--gradient-gray))',
+        rgblightgray: 'rgba(var(--gradient-lightgray))'
       },
     },
   },
   plugins: [],
 };
+

@@ -27,10 +27,10 @@ interface SteamProfile {
 }
 
 const getProfile =  async (steamId: string) => {
-    const { data } = await 
+    const  profile  = await 
         axios.get<SteamProfile>
-        (`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=AFE2D7140F2D5F5FC25E29323A1E7FF6&steamids=76561198038106270`)
-    return data
+        (`/api/ISteamUser/GetPlayerSummaries/v2/?key=${import.meta.env.VITE_STEAM_KEY}&steamids=${steamId}`)
+        return profile.data.response.players[0]
 }
 
 

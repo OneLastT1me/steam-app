@@ -11,22 +11,29 @@ type Props = {
     privateMode: boolean
     text?: string
     status: number
+    children: React.ReactElement;
 }
 
-const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status}: Props) =>{
+const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status, children}: Props) =>{
     const [stateSteam, setStateSteam] = useState('bg-offline')
     countries.registerLocale(en)  
 
     useEffect(()=>{
-        if(status === 0){
-            setStateSteam('bg-offline')
-           }else if(status === 1){
-            setStateSteam('bg-online')
-           }else if(status === 2){
-            setStateSteam('bg-ingame')
-           }
+        switch (status) {
+            case 0:
+              setStateSteam('bg-offline');
+              break;
+            case 1:
+              setStateSteam('bg-online');
+              break;
+            case 2:
+              setStateSteam('bg-ingame');
+              break;
+            default:
+              setStateSteam('bg-online');
+              break;
+          }
     },[])
- 
 
     return(
         <div>
@@ -34,7 +41,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
                 <div className={`${!privateMode ? 'h-[224px]' : ' min-h-full'} max-w-[990px]  mx-auto bg-darkgray`}>
                     <div className="min-h-[224px] px-[25px] pt-[24px] flex">
                         <div className={`${stateSteam} w-[168px] h-[168px] mt-[5px]`}>
-                            <img src={avatar} alt="avatar-profile" className="rounded-[3px] p-[2px] "/>
+                            <img src={avatar} alt="avatar-profile" className="rounded-[4px] p-[2px] "/>
                         </div>
                         <div className="pt-[8px] ml-[36px]">
                             <p className="text-lightwhite text-xl font-extralight font-motiva">
@@ -55,6 +62,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
                         </div>
                                 
                     </div>
+                    {children}
                 </div>
             </div>
         </div>

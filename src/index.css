@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-	--gradient-right: #ff7e5f; /* Пример начального цвета градиента */
-	--gradient-left: #feb47b;  /* Пример начального цвета градиента */
+	--gradient-white: 115, 173, 184, 0.247; 
+	--gradient-gray: 43, 45, 68, 0.93;
+	--gradient-lightgray: 0, 0, 0, 0.3  
   }
 /* header-menu */
 
@@ -35,6 +36,3 @@
   	background-size: cover;
   	background-position: center;
 }
-
-
-
