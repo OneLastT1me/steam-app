@@ -12,9 +12,10 @@ type Props = {
     text?: string
     status: number
     children: React.ReactElement;
+    level?: string
 }
 
-const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status, children}: Props) =>{
+const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status, level, children}: Props) =>{
     const [stateSteam, setStateSteam] = useState('bg-offline')
     countries.registerLocale(en)  
 
@@ -40,6 +41,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
             <div className="bg-profile h-screen w-full items-center justify-center">
                 <div className={`${!privateMode ? 'h-[224px]' : ' min-h-full'} max-w-[990px]  mx-auto bg-darkgray`}>
                     <div className="min-h-[224px] px-[25px] pt-[24px] flex">
+                        <div className="min-w-[623px] flex">
                         <div className={`${stateSteam} w-[168px] h-[168px] mt-[5px]`}>
                             <img src={avatar} alt="avatar-profile" className="rounded-[4px] p-[2px] "/>
                         </div>
@@ -60,7 +62,13 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
                                 <p className="pt-[12px] font-size-[17px] text-oceanblue">This profile is private</p>
                             )}
                         </div>
-                                
+                        </div>
+                        {   privateMode && 
+                                <div className="flex">
+                                    <p className="mr-[10px] text-lightwhite font-sans font-extralight text-[24px]">Level</p>
+                                    <div className="rounded-full border-[1px] border-lightwhite text-[16px] text-lightwhite text-center w-[28px] h-[28px] mt-[5px]">{level}</div>
+                                </div> 
+                        }
                     </div>
                     {children}
                 </div>

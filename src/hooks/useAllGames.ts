@@ -3,7 +3,7 @@ import { useQuery } from "react-query"
 
 interface LastGames {
     response: {
-        total_count: number,
+        game_count: number,
         games: {
             appid: string;
             name: string,

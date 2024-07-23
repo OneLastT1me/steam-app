@@ -21,7 +21,7 @@ module.exports = {
         lightwhite: '#ffffff',
         darkgray: '#23262E',
         hex: '#c4c4c4',
-        namegame: '#ebebeb',
+        gameName: '#ebebeb',
         lightgray: '#b8b6b4',
         gray: '#3D4450',
         blue: '#1a9fff',
