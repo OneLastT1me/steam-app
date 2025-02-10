@@ -21,7 +21,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
     countries.registerLocale(en)  
 
     useEffect(()=>{
-        setStateSteam(userStatusAcc(status))
+        setStateSteam('bg-'+userStatusAcc(status))
     },[])
 
     return(

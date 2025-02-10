@@ -8,13 +8,13 @@ export const lastTimeAtGame = (time: (string | number)) =>
 export const userStatusAcc = (status: number) => {
     switch (status) {
         case 0:
-            return 'bg-offline'
+            return 'offline'
         case 1:
-          return 'bg-online' 
+          return 'online' 
         case 2:
-          return 'bg-ingame'
+          return 'ingame'
         default:
-          return 'bg-online'
+          return 'online'
 
       }
 }

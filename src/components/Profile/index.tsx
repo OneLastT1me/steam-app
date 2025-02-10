@@ -16,8 +16,6 @@ export default function Profile () {
     const { data: friendsIds } = useFriendList(steamid!)
     const SteamIds = friendsIds?.map(arr => arr.steamid)
     const { data: firendsList } = usePlayersSummaries(SteamIds!)
-
-   
   
     const totalTimeToWeek = games?.games.reduce((totalTime, game) => {
         return (totalTime + (game.playtime_2weeks || 0) / 60)
@@ -106,18 +104,18 @@ export default function Profile () {
                                         true && 
                                         (
                                             <div>
-                                                <div className="flex gap-[5px]">
+                                                <div className="flex gap-[5px] mb-[12px]">
                                                     <Link to='/' className="text-gameName text-[14px] pt-[10px]">Fiends</Link><p className="text-[24px] text-offline">{friendsIds?.length}</p>
                                                 
                                                 </div>
                                                 {
                                                 firendsList?.slice(0,6).map((item, index) => (
                                                     <Link to='/' key={index} >
-                                                        <div className="h-[35px] flex ">
+                                                        <div className="h-[36px] flex gap-[10px] mb-[15px] ">
                                                             <img src={item.avatar} />
-                                                            <div className="gap-[10px]">
-                                                                <p className={`${userStatusAcc(item.personastate)}`}>{item.personaname}</p>
-                                                                <p>off</p>
+                                                            <div className="gap-[10px] font-motiva text-[12px]">
+                                                                <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{item.personaname}</p>
+                                                                <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{userStatusAcc(item.personastate)}</p>
                                                             </div>
                                                         </div>
                                                     </Link>
