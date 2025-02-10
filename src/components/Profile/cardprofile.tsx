@@ -2,6 +2,7 @@
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json";
 import { useEffect, useState } from "react";
+import { userStatusAcc } from "../../constants";
 
 type Props = {
     avatar: string
@@ -20,20 +21,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
     countries.registerLocale(en)  
 
     useEffect(()=>{
-        switch (status) {
-            case 0:
-              setStateSteam('bg-offline');
-              break;
-            case 1:
-              setStateSteam('bg-online');
-              break;
-            case 2:
-              setStateSteam('bg-ingame');
-              break;
-            default:
-              setStateSteam('bg-online');
-              break;
-          }
+        setStateSteam(userStatusAcc(status))
     },[])
 
     return(

@@ -28,7 +28,6 @@ const getLastLogTime =  async (steamId: string) => {
     const data  = await 
         axios.get<Props>
         (`api/IPlayerService/GetPlayerLinkDetails/v1/?key=${import.meta.env.VITE_STEAM_KEY}&steamids=${steamId}`)
-        console.log(data.data)
         return data.data.response
 }
 

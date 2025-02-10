@@ -1,28 +1,36 @@
 
-import { url, lastTimeAtGame } from "../../constants";
+import { url, lastTimeAtGame, userStatusAcc } from "../../constants";
 import { useAllGames } from "../../hooks/useAllGames";
+import { useFriendList } from "../../hooks/useFriendsList";
+import { usePlayersSummaries } from "../../hooks/usePlayersSummaries";
 import { useProfile } from "../../hooks/useProfile";
 import { useLevel } from "../../hooks/useSteamLevel";
 import Cardprofile from "./cardprofile";
-import { Link } from "react-router-dom";
+import { Link  } from "react-router-dom";
 
 export default function Profile () {
     const steamid = localStorage.getItem('steamid')
     const { data: lvl} = useLevel(steamid!)
     const { data: user } = useProfile(steamid!)
     const { data: games } = useAllGames(steamid!)
+    const { data: friendsIds } = useFriendList(steamid!)
+    const SteamIds = friendsIds?.map(arr => arr.steamid)
+    const { data: firendsList } = usePlayersSummaries(SteamIds!)
+
+   
   
     const totalTimeToWeek = games?.games.reduce((totalTime, game) => {
         return (totalTime + (game.playtime_2weeks || 0) / 60)
         
     }, 0)
 
+
     //sort first for last week second for last session
     const lastGames = games?.games.sort(
         (a , b) => b.playtime_2weeks - a.playtime_2weeks ).sort(
             (a , b) => Number(new Date(b.rtime_last_played)) - Number(new Date(a.rtime_last_played))).slice(0, 3)
 
-    // rewrok on error.page
+    // redirect on error.page
     if(!user){
         return null
     }
@@ -34,13 +42,13 @@ export default function Profile () {
                 personaname={user.personaname} 
                 realname={user.realname} 
                 country={user.loccountrycode} 
-                privateMode={user.communityvisibilitystate === (3 || 2)} 
+                privateMode={[2, 3].includes(user.communityvisibilitystate)}
                 status={user.personastate}
                 level={lvl?.player_level}
             >
                 <div>
                 {
-                    user.communityvisibilitystate === (3 || 2) && 
+                    [2, 3].includes(user.communityvisibilitystate)  && 
                     (   
                         <div className="flex px-[12px] gap-[10px]">
                             <div className="min-w-[625px]  rounded-[3px] ">
@@ -59,7 +67,7 @@ export default function Profile () {
                                                         </div>
                                                         <div className="ml-[10px] flex justify-between w-full">
                                                             <p className="text-gameName pt-[10px]">{items.name}</p>
-                                                            <p className=" text-offline text-[13px] pt-[32px] text-end">
+                                                            <p className="text-offline text-[13px] pt-[32px] text-end">
                                                             {(Number(items.playtime_forever) / 60).toFixed()} hrs on record<br/>
                                                             ast played on {lastTimeAtGame(items.rtime_last_played)}
                                                             </p>
@@ -74,7 +82,7 @@ export default function Profile () {
                                     )
                                 }
                             </div>
-                            <div className="w-[100%] bg-rgblightgray p-[10px]">
+                            <div className="w-[100%] bg-rgblightgray p-[10px] ">
                                 {user!.personastate === 0 ?(
                                     <div>
                                         <p className="text-offline">Currently Offline</p>
@@ -90,7 +98,31 @@ export default function Profile () {
                                    { games && 
                                         (
                                             <div className="flex gap-[5px]">
-                                                <Link to='/' className="text-gameName text-[14px] pt-[10px] ">Games</Link><p className="text-[24px] text-offline">{games.game_count}</p>
+                                                <Link to='/' className="text-gameName text-[14px] pt-[10px] pb-[40px] ">Games</Link><p className="text-[24px] text-offline">{games.game_count}</p>
+                                            </div>
+                                        )
+                                    }
+                                    {
+                                        true && 
+                                        (
+                                            <div>
+                                                <div className="flex gap-[5px]">
+                                                    <Link to='/' className="text-gameName text-[14px] pt-[10px]">Fiends</Link><p className="text-[24px] text-offline">{friendsIds?.length}</p>
+                                                
+                                                </div>
+                                                {
+                                                firendsList?.slice(0,6).map((item, index) => (
+                                                    <Link to='/' key={index} >
+                                                        <div className="h-[35px] flex ">
+                                                            <img src={item.avatar} />
+                                                            <div className="gap-[10px]">
+                                                                <p className={`${userStatusAcc(item.personastate)}`}>{item.personaname}</p>
+                                                                <p>off</p>
+                                                            </div>
+                                                        </div>
+                                                    </Link>
+                                                ))
+                                                }
                                             </div>
                                         )
                                     }

@@ -33,7 +33,6 @@ const getProfile =  async (steamId: string) => {
         return profile.data.response.players[0]
 }
 
-
 export const useProfile = (steamId: string) => {
     return useQuery(['profile', steamId],() => getProfile(steamId), {
         enabled: !!steamId,
