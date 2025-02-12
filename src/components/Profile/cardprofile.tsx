@@ -2,7 +2,7 @@
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json";
 import { useEffect, useState } from "react";
-import { userStatusAcc } from "../../constants";
+import { colorAccLevel, userStatusAcc } from "../../constants";
 
 type Props = {
     avatar: string
@@ -13,7 +13,7 @@ type Props = {
     text?: string
     status: number
     children: React.ReactElement;
-    level?: string
+    level?: number
 }
 
 const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status, level, children}: Props) =>{
@@ -53,8 +53,9 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
                         </div>
                         {   privateMode && 
                                 <div className="flex">
-                                    <p className="mr-[10px] text-lightwhite font-sans font-extralight text-[24px]">Level</p>
-                                    <div className="rounded-full border-[1px] border-lightwhite text-[16px] text-lightwhite text-center w-[28px] h-[28px] mt-[5px]">{level}</div>
+                                    <p className="mr-[10px] text-lightwhite font-motiva font-extralight text-[24px]">Level</p>
+                                    <div className="flex items-center justify-center rounded-full border-[2px] w-[32px] h-[32px] text-[16px] text-lightwhite mt-[5px]"
+                                            style={{ borderColor: level ? colorAccLevel(level) : "#000" }}>{level}</div>
                                 </div> 
                         }
                     </div>

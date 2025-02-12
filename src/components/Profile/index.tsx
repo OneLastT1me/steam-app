@@ -1,5 +1,5 @@
 
-import { url, lastTimeAtGame, userStatusAcc } from "../../constants";
+import { url, lastTimeAtGame, userStatusAcc, colorAccLevel } from "../../constants";
 import { useAllGames } from "../../hooks/useAllGames";
 import { useFriendList } from "../../hooks/useFriendsList";
 import { usePlayersSummaries } from "../../hooks/usePlayersSummaries";
@@ -10,25 +10,35 @@ import { Link  } from "react-router-dom";
 
 export default function Profile () {
     const steamid = localStorage.getItem('steamid')
-    const { data: lvl} = useLevel(steamid!)
     const { data: user } = useProfile(steamid!)
     const { data: games } = useAllGames(steamid!)
     const { data: friendsIds } = useFriendList(steamid!)
-    const SteamIds = friendsIds?.map(arr => arr.steamid)
-    const { data: firendsList } = usePlayersSummaries(SteamIds!)
-  
+    const fiendsIds = friendsIds?.map(arr => arr.steamid)
+    const { data: firendsList } = usePlayersSummaries(fiendsIds!)
+    const allId = [steamid!, fiendsIds!].flat()
+    const  levelUsers = useLevel(allId)
+   
+    // unite steam id and lvl acc( ferst steam - its you acc)
+    const userIdLvl =  levelUsers.map((item, index)=> ({
+        ...item, steamId: allId[index]
+    }))
+
+    //add lvl steam and sort list by lvl
+    const totalListFriends = firendsList?.map((item) => {
+        const matchedUser = userIdLvl.find(user => user.steamId === item.steamid);
+        return matchedUser ? { ...item, player_level: matchedUser.player_level } : item;
+    }).sort((a, b) => b.player_level! - a.player_level!);
+
     const totalTimeToWeek = games?.games.reduce((totalTime, game) => {
         return (totalTime + (game.playtime_2weeks || 0) / 60)
-        
     }, 0)
-
 
     //sort first for last week second for last session
     const lastGames = games?.games.sort(
         (a , b) => b.playtime_2weeks - a.playtime_2weeks ).sort(
             (a , b) => Number(new Date(b.rtime_last_played)) - Number(new Date(a.rtime_last_played))).slice(0, 3)
 
-    // redirect on error.page
+
     if(!user){
         return null
     }
@@ -42,7 +52,7 @@ export default function Profile () {
                 country={user.loccountrycode} 
                 privateMode={[2, 3].includes(user.communityvisibilitystate)}
                 status={user.personastate}
-                level={lvl?.player_level}
+                level={levelUsers[0]?.player_level}
             >
                 <div>
                 {
@@ -109,17 +119,23 @@ export default function Profile () {
                                                 
                                                 </div>
                                                 {
-                                                firendsList?.slice(0,6).map((item, index) => (
-                                                    <Link to='/' key={index} >
-                                                        <div className="h-[36px] flex gap-[10px] mb-[15px] ">
-                                                            <img src={item.avatar} />
-                                                            <div className="gap-[10px] font-motiva text-[12px]">
-                                                                <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{item.personaname}</p>
-                                                                <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{userStatusAcc(item.personastate)}</p>
+                                                    totalListFriends?.slice(0,6).map((item, index) => (
+                                                        <Link to='/' key={index} >
+                                                            <div className="h-[36px] flex  justify-between gap-[10px] mb-[15px] ">
+                                                                <div className="flex">
+                                                                    <img src={item.avatar} className="mr-[8px]"/>
+                                                                    <div className="gap-[10px] font-motiva text-[12px]">
+                                                                        <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{item.personaname}</p>
+                                                                        <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{userStatusAcc(item.personastate)}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div className="flex items-center justify-center rounded-full border-[2px] w-[32px] h-[32px] text-[16px] text-lightwhite mt-[5px]"
+                                                                        style={{ borderColor: item.player_level ? colorAccLevel(item.player_level) : "#000" }}>{item.player_level}</div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </Link>
-                                                ))
+                                                        </Link>
+                                                    ))
                                                 }
                                             </div>
                                         )

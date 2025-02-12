@@ -1,13 +1,25 @@
 import axios from "axios"
-import { useQuery } from "react-query"
+import { useQueries } from "react-query"
+
+interface SteamLevels {
+    response: {
+        player_level: number;
+    };
+}
   
-const getLevel = async (steamId: string) =>{
-    const lastGames  = await axios.get(`api/IPlayerService/GetSteamLevel/v0001/?key=${import.meta.env.VITE_STEAM_KEY}&steamid=${steamId}&include_appinfo=true`)
-    return lastGames.data.response
+const getLevel = async (steamId: string)=>{
+    const steamLevel  = await axios.get<SteamLevels>(`api/IPlayerService/GetSteamLevel/v0001/?key=${import.meta.env.VITE_STEAM_KEY}&steamid=${steamId}`)  
+    return steamLevel.data.response
 }
 
-export const useLevel = (steamId: string) => {
-    return useQuery(['steamLevel', steamId],() => getLevel(steamId),{
-        enabled: !!steamId,
-      })
+export const useLevel = (steamIds: string[]) => {
+    const data = useQueries(
+            steamIds.map((steamId) => ({
+                    queryKey: ['steams-levels', steamId],
+                    queryFn: () => getLevel(steamId),
+                    enabled: !!steamId
+        })),
+    )
+    
+    return data.map(({data}) => data)
 }

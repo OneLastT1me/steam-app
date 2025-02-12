@@ -9,6 +9,7 @@ interface SteamCards  {
             avatar: string
             lastlogoff: string
             personastate: number
+            player_level?: number;
         }[]
     }
 }
@@ -21,6 +22,6 @@ const getPlayersSummaries = async (steamIds: string[])=>{
 
 export const usePlayersSummaries = (steamIds: string[]) => {
     return useQuery(['friendsList', steamIds],() => getPlayersSummaries(steamIds), {
-
+        enabled: steamIds?.length > 0,
       })
 }
