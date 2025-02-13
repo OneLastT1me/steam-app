@@ -1,7 +1,6 @@
 
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json";
-import { useEffect, useState } from "react";
 import { colorAccLevel, userStatusAcc } from "../../constants";
 
 type Props = {
@@ -17,20 +16,15 @@ type Props = {
 }
 
 const Cardprofile = ({avatar, personaname, realname, country, privateMode, text, status, level, children}: Props) =>{
-    const [stateSteam, setStateSteam] = useState('bg-offline')
     countries.registerLocale(en)  
-
-    useEffect(()=>{
-        setStateSteam('bg-'+userStatusAcc(status))
-    },[])
 
     return(
         <div>
             <div className="bg-profile h-screen w-full items-center justify-center">
-                <div className={`${!privateMode ? 'h-[224px]' : ' min-h-full'} max-w-[990px]  mx-auto bg-darkgray`}>
+                <div className={`${!privateMode ? 'h-[224px]' : ' min-h-full'} max-w-[980px]  mx-auto bg-darkgray`}>
                     <div className="min-h-[224px] px-[25px] pt-[24px] flex">
                         <div className="min-w-[623px] flex">
-                        <div className={`${stateSteam} w-[168px] h-[168px] mt-[5px]`}>
+                        <div className={`bg-${userStatusAcc(status)} w-[168px] h-[168px] mt-[5px]`}>
                             <img src={avatar} alt="avatar-profile" className="rounded-[4px] p-[2px] "/>
                         </div>
                         <div className="pt-[8px] ml-[36px]">
@@ -52,7 +46,7 @@ const Cardprofile = ({avatar, personaname, realname, country, privateMode, text,
                         </div>
                         </div>
                         {   privateMode && 
-                                <div className="flex">
+                                <div className="flex pt-[8px]">
                                     <p className="mr-[10px] text-lightwhite font-motiva font-extralight text-[24px]">Level</p>
                                     <div className="flex items-center justify-center rounded-full border-[2px] w-[32px] h-[32px] text-[16px] text-lightwhite mt-[5px]"
                                             style={{ borderColor: level ? colorAccLevel(level) : "#000" }}>{level}</div>

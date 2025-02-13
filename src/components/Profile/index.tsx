@@ -2,6 +2,7 @@
 import { url, lastTimeAtGame, userStatusAcc, colorAccLevel } from "../../constants";
 import { useAllGames } from "../../hooks/useAllGames";
 import { useFriendList } from "../../hooks/useFriendsList";
+import StatusAcc from "../Ui/statusAcc"
 import { usePlayersSummaries } from "../../hooks/usePlayersSummaries";
 import { useProfile } from "../../hooks/useProfile";
 import { useLevel } from "../../hooks/useSteamLevel";
@@ -37,7 +38,6 @@ export default function Profile () {
     const lastGames = games?.games.sort(
         (a , b) => b.playtime_2weeks - a.playtime_2weeks ).sort(
             (a , b) => Number(new Date(b.rtime_last_played)) - Number(new Date(a.rtime_last_played))).slice(0, 3)
-
 
     if(!user){
         return null
@@ -91,17 +91,11 @@ export default function Profile () {
                                 }
                             </div>
                             <div className="w-[100%] bg-rgblightgray p-[10px] ">
-                                {user!.personastate === 0 ?(
-                                    <div>
-                                        <p className="text-offline">Currently Offline</p>
-                                        <p className="text-offline">Last Online {Math.floor(user.lastlogoff / (1000 * 60 * 60 * 24))} days ago</p>
-                                    </div>
-                                    )
-                                     :( 
-                                        <div>
-                                            <p className="text-online">Online</p>
-                                        </div>
-                                )}
+                                <StatusAcc 
+                                    status={user.personastate}
+                                    lastlogoff={user.lastlogoff}
+                                    finding={'main'}
+                                />
                                 <div className=" mt-[40px]">
                                    { games && 
                                         (
@@ -126,7 +120,11 @@ export default function Profile () {
                                                                     <img src={item.avatar} className="mr-[8px]"/>
                                                                     <div className="gap-[10px] font-motiva text-[12px]">
                                                                         <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{item.personaname}</p>
-                                                                        <p className={`${'text-' + userStatusAcc(item.personastate)}`}>{userStatusAcc(item.personastate)}</p>
+                                                                        <StatusAcc 
+                                                                            status={item.personastate}
+                                                                            lastlogoff={Number(item.lastlogoff)}
+                                                                            finding={'list'}
+                                                                        />
                                                                     </div>
                                                                 </div>
                                                                 <div>
