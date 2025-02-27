@@ -1,13 +1,13 @@
 
-import { url, lastTimeAtGame, userStatusAcc, colorAccLevel } from "../../constants";
-import { useAllGames } from "../../hooks/useAllGames";
-import { useFriendList } from "../../hooks/useFriendsList";
-import StatusAcc from "../Ui/statusAcc"
-import { usePlayersSummaries } from "../../hooks/usePlayersSummaries";
-import { useProfile } from "../../hooks/useProfile";
-import { useLevel } from "../../hooks/useSteamLevel";
-import Cardprofile from "./cardprofile";
-import { Link  } from "react-router-dom";
+import { url, lastTimeAtGame, userStatusAcc, colorAccLevel } from '../../constants'
+import { useAllGames } from '../../hooks/useAllGames'
+import { useFriendList } from '../../hooks/useFriendsList'
+import StatusAcc from '../Ui/statusAcc'
+import { usePlayersSummaries } from '../../hooks/usePlayersSummaries'
+import { useProfile } from '../../hooks/useProfile'
+import { useLevel } from '../../hooks/useSteamLevel'
+import Cardprofile from './cardprofile'
+import { Link  } from 'react-router-dom'
 
 export default function Profile () {
     const steamid = localStorage.getItem('steamid')
@@ -26,9 +26,9 @@ export default function Profile () {
 
     //add lvl steam and sort list by lvl
     const totalListFriends = firendsList?.map((item) => {
-        const matchedUser = userIdLvl.find(user => user.steamId === item.steamid);
-        return matchedUser ? { ...item, player_level: matchedUser.player_level } : item;
-    }).sort((a, b) => b.player_level! - a.player_level!);
+        const matchedUser = userIdLvl.find(user => user.steamId === item.steamid)
+        return matchedUser ? { ...item, player_level: matchedUser.player_level } : item
+    }).sort((a, b) => b.player_level! - a.player_level!)
 
     const totalTimeToWeek = games?.games.reduce((totalTime, game) => {
         return (totalTime + (game.playtime_2weeks || 0) / 60)
@@ -45,7 +45,7 @@ export default function Profile () {
 
     return(
         <div>
-           <Cardprofile 
+            <Cardprofile 
                 avatar={user.avatarfull} 
                 personaname={user.personaname} 
                 realname={user.realname} 
@@ -55,7 +55,7 @@ export default function Profile () {
                 level={levelUsers[0]?.player_level}
             >
                 <div>
-                {
+                    {
                     [2, 3].includes(user.communityvisibilitystate)  && 
                     (   
                         <div className="flex px-[12px] gap-[10px]">
@@ -64,8 +64,8 @@ export default function Profile () {
                                     games && (
                                         <div>
                                             <div className="text-ls text-lightwhite font-motiva px-[10px] py-[5px] bg-gradient-to-r from-rgbwhite to-rgbgray flex justify-between">
-                                                    <p>Recent Activity</p>
-                                                    <p>{totalTimeToWeek?.toFixed(1)} hours past 2 weeks</p>
+                                                <p>Recent Activity</p>
+                                                <p>{totalTimeToWeek?.toFixed(1)} hours past 2 weeks</p>
                                             </div>
                                             <div className="pt-[28px] px-[10px] pb-[11px] bg-rgblightgray">
                                                 {lastGames?.map((items, index) =>(
@@ -76,8 +76,8 @@ export default function Profile () {
                                                         <div className="ml-[10px] flex justify-between w-full">
                                                             <p className="text-gameName pt-[10px]">{items.name}</p>
                                                             <p className="text-offline text-[13px] pt-[32px] text-end">
-                                                            {(Number(items.playtime_forever) / 60).toFixed()} hrs on record<br/>
-                                                            ast played on {lastTimeAtGame(items.rtime_last_played)}
+                                                                {(Number(items.playtime_forever) / 60).toFixed()} hrs on record<br/>
+                                                                ast played on {lastTimeAtGame(items.rtime_last_played)}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -97,7 +97,7 @@ export default function Profile () {
                                     finding={'main'}
                                 />
                                 <div className=" mt-[40px]">
-                                   { games && 
+                                    { games && 
                                         (
                                             <div className="flex gap-[5px]">
                                                 <Link to='/' className="text-gameName text-[14px] pt-[10px] pb-[40px] ">Games</Link><p className="text-[24px] text-offline">{games.game_count}</p>
@@ -129,7 +129,7 @@ export default function Profile () {
                                                                 </div>
                                                                 <div>
                                                                     <div className="flex items-center justify-center rounded-full border-[2px] w-[32px] h-[32px] text-[16px] text-lightwhite mt-[5px]"
-                                                                        style={{ borderColor: item.player_level ? colorAccLevel(item.player_level) : "#000" }}>{item.player_level}</div>
+                                                                        style={{ borderColor: item.player_level ? colorAccLevel(item.player_level) : '#000' }}>{item.player_level}</div>
                                                                 </div>
                                                             </div>
                                                         </Link>

@@ -1,5 +1,5 @@
-import axios from "axios"
-import { useQuery } from "react-query"
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 interface SteamCards  {
     response:{
@@ -9,19 +9,19 @@ interface SteamCards  {
             avatar: string
             lastlogoff: string
             personastate: number
-            player_level?: number;
+            player_level?: number
         }[]
     }
 }
 
 const getPlayersSummaries = async (steamIds: string[])=>{
-    const idsString = steamIds.join(",");
+    const idsString = steamIds.join(',')
     const data = await axios.get<SteamCards>(`api/ISteamUser/GetPlayerSummaries/v0002/?key=${import.meta.env.VITE_STEAM_KEY}&steamids=${idsString}`)
     return data.data.response.players
 }
 
 export const usePlayersSummaries = (steamIds: string[]) => {
     return useQuery(['friendsList', steamIds],() => getPlayersSummaries(steamIds), {
-        enabled: steamIds?.length > 0,
+        enabled: steamIds?.length > 0
       })
 }

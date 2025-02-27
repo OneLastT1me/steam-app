@@ -1,12 +1,12 @@
 
 type Props = {
-    status: number, 
-    lastlogoff: number, 
+    status: number
+    lastlogoff: number
     finding: 'main'| 'list' 
 }
 
  const StatusAcc = ({status, lastlogoff, finding}:Props) => {
-    console.log(lastlogoff)
+
     return (
         <div>
             {
@@ -17,9 +17,9 @@ type Props = {
                 </div>
                     )
                     :( 
-                <div>
-                    <p className="text-online">{finding === 'main' && 'Currently'} Online</p>
-                </div>
+                        <div>
+                            <p className="text-online">{finding === 'main' && 'Currently'} Online</p>
+                        </div>
             )}
         </div>
         )
