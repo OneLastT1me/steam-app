@@ -1,17 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+	--gradient-white: 115, 173, 184, 0.247; 
+	--gradient-gray: 43, 45, 68, 0.93;
+	--gradient-lightgray: 0, 0, 0, 0.3  
+  }
+/* header-menu */
 
 .text-header {
-	@apply text-base text-white font-medium font-sans; 
+	@apply text-base text-white font-medium font-sans font-motiva; 
 
 	&:hover{
-		@apply text-lightWhite
+		@apply text-lightwhite
 	}
 }
 
 .dropdown-menu {
-	@apply block px-4 py-2 text-gray text-white font-medium  bg-gray text-sm font-sans;
+	@apply block px-4 py-2 text-gray text-white font-medium  bg-gray text-sm font-sans font-motiva;
 
 	&:hover{
 		@apply bg-white text-gray
@@ -19,6 +25,14 @@
 }
 
 .active-menu {
-	@apply text-blue underline  decoration-2  font-medium font-sans
+	@apply text-blue underline  decoration-2  font-medium font-sans font-motiva
 }
 
+
+/* profile */
+
+.bg-profile {
+	background-image: url('/src/assets/bg_dots.png');
+  	background-size: cover;
+  	background-position: center;
+}

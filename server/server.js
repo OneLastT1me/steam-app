@@ -7,8 +7,12 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
+  header: {
+        'Access-Control-Allow-Origin': '*'
+    },
   origin: 'http://localhost:5173', 
-  credentials: true 
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
 }));
 
 app.use(express.json()); 
@@ -17,13 +21,14 @@ app.use(session({
   secret: 'key',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } 
+  cookie: { secure: false },
 }));
+
 
 passport.use(new SteamStrategy({
   returnURL: 'http://localhost:5009/auth/steam/return',
   realm: 'http://localhost:5009/',
-  apiKey: process.env.STEAM_API_KEY,
+  apiKey: process.env.VITE_STEAM_KEY,
   passReqToCallback: true,
 }, ( req, identifier, profile, done) => {
   profile.identifier = identifier;
