@@ -20,7 +20,7 @@ export const userStatusAcc = (status: number) => {
 }
 
 export const colorAccLevel = (level: number) => {
-    switch (true) {
+    switch (!level) {
       case level < 10:
         return 'lightwhite'
       case level < 20:
